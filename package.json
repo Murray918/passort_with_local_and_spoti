@@ -1,0 +1,14 @@
+{
+  "name": "spotify",
+  "version": "1.0.0",
+  "description": "this is an oauth2.0 example",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "spotify"
+  ],
+  "author": "Andrew Murray",
+  "license": "ISC"
+}
