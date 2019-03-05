@@ -16,14 +16,14 @@ const userDetail = new Schema(
 
 
 userDetail.methods.validatePassword = function(password) {
-  hash = crypto
-    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
-    .toString("hex")
-  console.log(this.salt)
-  console.log("saved hash : ", this.hash)
-  console.log("hash : ", hash)
-  console.log("password :", this.password)
-  return this.passwrod === hash
+  console.log(password)
+  // hash = crypto
+  //   .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
+  //   .toString("hex")
+  
+
+ 
+  
 }
 
 userDetail.pre("save", function(next) {

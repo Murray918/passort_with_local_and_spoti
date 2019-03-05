@@ -18,13 +18,12 @@ router.post("/create", (req, res) => {
   let newUser = new UserDetails({
     username: username,
     password: password,
-    created_at: new Date(),
-    // salt: ""
+    created_at: new Date()
   })
   newUser
     .save()
     .then((result) => {
-      res.send(result)
+     res.send(result)
     })
     .catch((error) => {
       console.log(error)
@@ -32,13 +31,10 @@ router.post("/create", (req, res) => {
     })
 })
 
-router.post("/", passport.authenticate("local"), (req, res) => {
-    console.log('i was hit again but i dont know tho')
-    res.send('party with cardi')
-})
 
-router.get("/success", (req, res, next) => {
-  res.send("<h1>success</h1>")
+router.post("/", passport.authenticate("local"), (req, res) => {
+  console.log('i was hit again but i dont know tho')
+  res.send('party with cardi')
 })
 
 router.get("/nope", (req, res) => {
