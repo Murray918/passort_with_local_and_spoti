@@ -14,21 +14,15 @@ const userDetail = new Schema(
   { collection: "userInfo" }
 )
 
-userDetail.methods.setPassword = function(password) {
-  this.salt = crypto.randomBytes(16).toString("hex")
-  this.password = crypto
-    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
-    .toString("hex")
-}
 
 userDetail.methods.validatePassword = function(password) {
   hash = crypto
-    .pbkdf2Sync (password, this.salt, 10000, 512, "sha512")
+    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
     .toString("hex")
-    console.log(this.salt)
-    console.log('saved hash : ', this.hash)
-    console.log('hash : ', hash)
-    console.log('password :', this.password)
+  console.log(this.salt)
+  console.log("saved hash : ", this.hash)
+  console.log("hash : ", hash)
+  console.log("password :", this.password)
   return this.passwrod === hash
 }
 
@@ -45,7 +39,6 @@ userDetail.pre("save", function(next) {
     next()
   })
 })
-
 userDetail.plugin(passportLocalMongoose)
 
 module.exports = mongoose.model("userInfo", userDetail)

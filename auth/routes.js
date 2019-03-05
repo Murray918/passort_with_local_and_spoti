@@ -5,7 +5,9 @@ const passport = require("passport")
 const passportService = require("./strategies")
 
 router.get("/", (req, res) => {
-  UserDetails.find(null).then((data) => {
+  UserDetails.find(null)
+  .select({password: 1, salt : 1, username : 1})
+  .then((data) => {
     console.log(data)
     res.send(data)
   })
@@ -17,7 +19,7 @@ router.post("/create", (req, res) => {
     username: username,
     password: password,
     created_at: new Date(),
-    salt: ""
+    // salt: ""
   })
   newUser
     .save()
