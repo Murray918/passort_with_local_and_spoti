@@ -1,20 +1,43 @@
+const User = require("./schema")
+const passport = require("passport")
+const LocalStrategy = require("passport-local").Strategy
+console.log("hello strategy")
 
-const mongoose = require('mongoose');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
+passport.use(
+  "local",
+  new LocalStrategy(
+    {
+      usernameField: "username",
+      passwordField: "password"
+    },
+    (username, password, done) => {
+      console.log(username, password)
+      User.findOne({ username })
+        .select({ salt: 1, password: 1, username: 1 })
+        .then((user) => {
+          if (!user || !user.validatePassword(password)) {
+            return done(null, false, {
+              errors: { "email or password": "is invalid" }
+            })
+          }
+          return done(null, user)
+        })
+        .catch(done)
+    }
+  )
+)
 
-const Users = mongoose.model('Users');
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id)
+})
 
-passport.use(new LocalStrategy({
-  usernameField: 'user[email]',
-  passwordField: 'user[password]',
-}, (email, password, done) => {
-  Users.findOne({ email })
-    .then((user) => {
-      if(!user || !user.validatePassword(password)) {
-        return done(null, false, { errors: { 'email or password': 'is invalid' } });
-      }
+passport.deserializeUser(function(id, cb) {
+  UserDetails.findById(id, function(err, user) {
+    if (err) {
+      return cb(err)
+    }
+    cb(null, user)
+  })
+})
 
-      return done(null, user);
-    }).catch(done);
-}));
+module.exports = passport
