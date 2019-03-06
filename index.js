@@ -8,6 +8,8 @@ const passport = require("passport")
 const login = require("./auth/routes")
 const PORT = process.env.NODE_ENV || 8080
 const isProduction = process.env.NODE_ENV === "production"
+
+//initialize express
 const app = express()
 
 mongoose.connect(
@@ -19,13 +21,13 @@ mongoose.connect(
 )
 
 app.use(cors())
-app.use(require("cookie-parser")())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(morgan("dev"))
+app.use(morgan("combined"))
 app.use(passport.initialize())
 app.use(passport.session())
 
+//set up our session
 app.use(
   session({
     secret: "passport-tutorial",
@@ -35,9 +37,8 @@ app.use(
   })
 )
 
+//use our login routes
 app.use("/login", login)
-
-
 
 app.listen(PORT, () => {
   console.log(`Your server is running on ${PORT}`)

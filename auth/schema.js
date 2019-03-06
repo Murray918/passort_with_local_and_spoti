@@ -1,4 +1,3 @@
-const crypto = require("crypto")
 const mongoose = require("mongoose")
 const { Schema } = mongoose
 const passportLocalMongoose = require("passport-local-mongoose")
@@ -13,18 +12,6 @@ const userDetail = new Schema(
   },
   { collection: "userInfo" }
 )
-
-
-userDetail.methods.validatePassword = function(password) {
-  console.log(password)
-  // hash = crypto
-  //   .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
-  //   .toString("hex")
-  
-
- 
-  
-}
 
 userDetail.pre("save", function(next) {
   const user = this
@@ -41,4 +28,4 @@ userDetail.pre("save", function(next) {
 })
 userDetail.plugin(passportLocalMongoose)
 
-module.exports = mongoose.model("userInfo", userDetail)
+  module.exports = mongoose.model("userInfo", userDetail)
