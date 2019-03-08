@@ -2,7 +2,7 @@ const UserDetails = require("./schema")
 const express = require("express")
 const router = express.Router()
 const passport = require("passport")
-// const passportService = require("./strategies")
+const passportService = require("./strategies")
 
 router.get("/", (req, res) => {
   UserDetails.find(null)

@@ -14,11 +14,10 @@ const userDetail = new Schema(
 )
 
 userDetail.pre("save", function(next) {
+  //explicitly set this to user
   const user = this
   if (!user.isModified("password")) return next()
-  console.log("in the things", user.password)
   this.setPassword(user.password).then((result) => {
-    console.log(result)
     user.password = result.hash
     user.hash = result.hash
     user.salt = result.salt
@@ -26,6 +25,8 @@ userDetail.pre("save", function(next) {
     next()
   })
 })
+
 userDetail.plugin(passportLocalMongoose)
 
   module.exports = mongoose.model("userInfo", userDetail)
+  
